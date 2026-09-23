@@ -60,6 +60,43 @@ for every group) — encoded as heuristics on English, not Minto's own published
 checklist; dismiss any that misread a sentence. The **Guide** view documents
 the full rule catalogue, the vocabulary, and the keyboard grammar.
 
+## Storage: pyramid/1 records
+
+The editor works on a nested document, but the **store works on records** — one
+per pyramid, point, evidence item, question and reference, each with its own
+`id` / `createdAt` / `updatedAt` / `deletedAt` / `origin`. The shape is
+[`pyramid/1`](../MindMap/doc/09-pyramid-app.md); the record contract it has to
+satisfy is [`../sync-server/docs/sync-protocol.md`](../sync-server/docs/sync-protocol.md).
+
+`projectDoc()` flattens the document into records and `materialise()` rebuilds
+it, so none of the editor, the checks or the walkthrough had to change to gain
+this. Clocks are set by **diffing, not by the editor**: a record whose body is
+unchanged keeps its old `updatedAt`, and a record that disappears from the
+document is written back with `deletedAt` set rather than dropped. A save that
+changes nothing therefore writes nothing, editing one point moves exactly one
+clock, and a delete propagates as a tombstone instead of being resurrected by
+the next device to sync.
+
+Documents written before this are lifted into records once, on first load; the
+old `governing-thought.docs.v1` key is left in place so the lift can be rolled
+back by clearing `pyramid.records.v1`.
+
+One departure from the spec is worth naming: `Point.group` stays an inline
+field rather than becoming its own record. It is 1:1 with the point whose
+children it describes, so it has no identity to sync and no separate clock, and
+keeping it inline is what keeps the export readable by Metropolis.
+
+**Export → JSON** writes a `pyramid/1` file. Pyramid's own state that the spec
+has no room for — the problem definition, the decomposition tree, the dismissed
+findings, the `derivedFrom` provenance map — travels under a single `x-pyramid`
+key, so a strict reader can ignore it and a round-trip does not silently lose
+the analysis. Tombstones are included: a deletion that did not travel would come
+back from the next device to sync.
+
+*Not yet built:* the sync client itself. `../sync-kit` does not exist, so there
+is no third store backend and no Sync settings panel. The record shape, the
+clocks, the tombstones and the per-device `origin` are all in place for it.
+
 ## Data out
 
 The document is also a graph: **Export → Graph (JSON-LD)** or **Triples
@@ -68,3 +105,24 @@ The document is also a graph: **Export → Graph (JSON-LD)** or **Triples
 produced it — as a typed edge. Ids are creation-ordered and namespaced
 (`urn:pyramid:<documentId>:<kind>:<nodeId>`) so documents merge without
 collision. See **Guide → Data out** in the app for the full vocabulary.
+
+## Keeping the inlined kit honest
+
+This app cannot `<link>` [ui-kit](https://github.com/kasinox/ui-kit) the way
+Metropolis and IDEF0 do — it is one bundled file served as an artifact and
+behind `gt://`, with no sibling folder at runtime — so the kit is copied in.
+Copies rot, so every inlined region is delimited by markers naming its source
+and the commit it came from, and a script checks them:
+
+```bash
+node scripts/check-inline.mjs          # report drift
+node scripts/check-inline.mjs --fix    # re-copy and restamp
+```
+
+`mode=copy` blocks (the kit's CSS and Pyramid's adapter) must be byte-identical
+to their sources. The theme runtime is `mode=port` — it is `ui-kit/js/theme.js`
+rebuilt as plain functions because this page has no module loader, so bytes
+cannot match; instead the recorded commit is checked against the source's, and
+the script says so when the source has moved and the port needs re-reading.
+Edit the source in `../ui-kit` and re-run with `--fix`; never patch the inlined
+blocks by hand.
