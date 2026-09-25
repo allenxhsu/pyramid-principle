@@ -1,0 +1,13 @@
+{
+  "id": "pyramid",
+  "name": "Pyramid Principle",
+  "mark": "PY",
+  "colorToken": "pyramid",
+  "workspace": "pyramid",
+  "static": { "dir": ".", "build": null, "include": ["governing-thought.html"] },
+  "entry": "governing-thought.html",
+  "offline": true,
+  "csp": null,
+  "connectScheme": "pyramid",
+  "pwa": { "shortName": "Pyramid", "themeColor": "#0F5257", "display": "standalone" }
+}
