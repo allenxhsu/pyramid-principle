@@ -146,6 +146,40 @@ one pre-prefix key, `governing-thought.docs.v1`, is read only when the app is
 on it, no such data can exist and an unprefixed read would be the collision
 this rule is about.
 
+## Durability
+
+Records live in **IndexedDB**, through sync-kit's `IndexedDbStore`. They used to
+be in `localStorage`, which a browser evicts first and without warning — and
+records are the one thing that cannot be re-derived. localStorage now keeps only
+what is cheap to lose: the device id (`pyramid.origin`), the sync settings
+(`pyramid.sync.*`) and the shared theme (`ui-kit.*`).
+
+Documents written before the move are lifted once, on first open. The old keys
+stay exactly where they are until every id has been read back out of IndexedDB
+with a matching `updatedAt` — a migration that deletes its source before
+verifying is one power cut away from losing everything — and the sync cursors
+travel with them, or the first sync afterwards would re-upload everything or
+nothing depending on which way they were stale.
+
+Even IndexedDB is evictable unless the browser agrees to keep it, so the app
+asks (`navigator.storage.persist()`) on first launch and again whenever sync is
+enabled, never blocking on the answer. The Sync panel reports **Persisted** or
+**At risk** with the one thing that fixes it — install the app from the browser
+menu, or add it to the Home Screen on iPhone — beside the local record count and
+the server's own count from `/sync/health`, so *am I persisted in both places?*
+is a question the UI answers.
+
+`../sync-kit` has no `persistence.ts` and its IIFE exports no
+`requestPersistentStorage`, so this calls `navigator.storage` directly; the
+function is shaped to be swapped for the kit's when it grows one.
+
+**Export → Everything (backup)** writes every record in the store, tombstones
+included — a backup that dropped them would resurrect deleted points on import.
+**Import a backup…** in the Import view merges one back by the same
+last-write-wins rule sync uses, so importing the same file twice is a no-op and
+importing an older one cannot undo newer work. That is what lets a copy live
+anywhere without the server.
+
 ## Keeping the inlined kit honest
 
 This app cannot `<link>` [ui-kit](https://github.com/kasinox/ui-kit) the way

@@ -3148,6 +3148,9 @@ html[data-sc] .hudpop::after{
           <div class="actions">
             <button class="btn primary" id="parseBtn">Parse</button>
             <button class="btn" id="sampleBtn">Load a messy sample</button>
+            <span style="flex:1"></span>
+            <label class="btn" for="restoreFile" style="cursor:pointer">Import a backup…</label>
+            <input type="file" id="restoreFile" accept="application/json,.json" hidden>
             <span class="grow"></span>
           </div>
           <div id="importOut"></div>
@@ -3181,6 +3184,7 @@ html[data-sc] .hudpop::after{
             <button data-fmt="json" aria-pressed="false">JSON</button>
             <button data-fmt="graph" aria-pressed="false">Graph (JSON-LD)</button>
             <button data-fmt="triples" aria-pressed="false">Triples (CSV)</button>
+            <button data-fmt="backup" aria-pressed="false">Everything (backup)</button>
           </div>
           <p class="fmtnote" id="fmtNote"></p>
           <pre class="out" id="exportOut"></pre>
@@ -5291,10 +5295,16 @@ const store = {
        and a place to write merged records, and the record shape here already
        satisfies its contract. Its keys are pyramid.records / pyramid.meta. */
     try {
-      if (window.SyncKit && window.SyncKit.LocalStore){
-        this.sk = new SyncKit.LocalStore({ prefix: 'pyramid' });
+      if (window.SyncKit && window.SyncKit.IndexedDbStore){
+        /* IndexedDB, not localStorage: a browser evicts localStorage first and
+           without warning, and records are the thing that cannot be re-derived.
+           localStorage keeps only settings, the device id and the theme. */
+        this.sk = new SyncKit.IndexedDbStore({
+          name: 'pyramid', version: 1, indexes: { pyramidId: 'pyramidId', type: 'type' },
+        });
         await this.sk.open();
         this.mode = 'sync';
+        await this._liftLocalStore();
         await this._liftOld();
         return;
       }
@@ -5350,6 +5360,51 @@ const store = {
     const map = this.mode === 'local' ? this._local() : this.mem;
     recs.forEach(r => { map[r.id] = r; });
     if (this.mode === 'local') this._putLocal(map); else this.mem = map;
+  },
+
+  /*
+   * One-time lift of the records this app used to keep in localStorage.
+   *
+   * The old keys stay exactly where they are until the new store has been
+   * written AND read back and compared — a migration that deletes its source
+   * before verifying is one power cut away from losing everything. Only once
+   * every id is present in IndexedDB with the same updatedAt are they removed,
+   * which is what "no records left in localStorage" means here.
+   */
+  async _liftLocalStore(){
+    let raw;
+    try { raw = localStorage.getItem('pyramid.records'); } catch (e) { return; }
+    if (!raw) return;
+    let old;
+    try { old = JSON.parse(raw); } catch (e) { return; }
+    const records = Array.isArray(old) ? old : Object.keys(old).map(k => old[k]);
+    if (!records.length){ this._dropLocalRecords(); return; }
+
+    await this.sk.put(records);
+
+    // verify before dropping anything
+    const now = await this.sk.all();
+    const seen = {};
+    now.forEach(r => { seen[r.id] = r.updatedAt; });
+    const missing = records.filter(r => seen[r.id] !== r.updatedAt);
+    if (missing.length){
+      console.warn('pyramid: ' + missing.length + ' record(s) did not survive the move to IndexedDB; leaving localStorage intact');
+      return;
+    }
+
+    /* Carry the sync cursors too, or the first sync after the move re-uploads
+       everything or uploads nothing, depending on which way they are stale. */
+    try {
+      const meta = JSON.parse(localStorage.getItem('pyramid.meta') || '{}');
+      for (const k of Object.keys(meta)) await this.sk.setMeta(k, meta[k]);
+    } catch (e) { /* cursors reset to 0, which is safe: it re-pushes */ }
+
+    this._dropLocalRecords();
+    console.info('pyramid: moved ' + records.length + ' records from localStorage to IndexedDB');
+  },
+  _dropLocalRecords(){
+    try { localStorage.removeItem('pyramid.records'); localStorage.removeItem('pyramid.meta'); }
+    catch (e) { /* nothing to drop */ }
   },
 
   /* One-time lift of the pre-record blobs (one entry per document) into
@@ -5473,6 +5528,67 @@ async function refreshRecs(){
    Standalone. A URL and a token the user pastes, kept under pyramid.sync.*
    like every other key this app owns. */
 
+/* ── durability ────────────────────────────────────────────────────────
+   A browser keeps an origin's data only while it feels like it: without the
+   persistent-storage grant, IndexedDB is evictable under pressure and the
+   records go without warning. Asking is cheap and the answer is worth showing,
+   because the remedy is something only the person at the keyboard can do.
+
+   ../sync-kit has no persistence.ts and the built IIFE exports no
+   requestPersistentStorage, so this calls navigator.storage directly. If the
+   kit grows one, this is the shape to replace.
+
+   Never blocks: the app renders and works whatever the answer is. */
+const persistence = { state: 'unknown', advice: '' };
+
+async function requestPersistentStorage(){
+  try {
+    if (!navigator.storage || !navigator.storage.persist){
+      persistence.state = 'unsupported';
+      persistence.advice = 'This browser does not expose a durability grant; a backup export is the safety net.';
+    } else {
+      let ok = await navigator.storage.persisted();
+      if (!ok) ok = await navigator.storage.persist();
+      persistence.state = ok ? 'persisted' : 'at-risk';
+      persistence.advice = ok
+        ? 'The browser has agreed to keep this app\u2019s data.'
+        : (/iPhone|iPad|iPod/.test(navigator.userAgent)
+            ? 'Add this app to the Home Screen and the browser will keep its data.'
+            : 'Install the app from the browser menu and the browser will keep its data.');
+    }
+  } catch (e) {
+    persistence.state = 'unsupported';
+    persistence.advice = 'The durability grant could not be read; a backup export is the safety net.';
+  }
+  try { renderSync(); } catch (e) { /* the panel may not exist yet */ }
+  return persistence.state;
+}
+
+/* Local and server counts side by side, so "am I persisted in both places?" is
+   a question the UI answers rather than one the user has to infer. */
+const counts = { local: null, server: null, head: 0, checkedAt: 0 };
+
+async function refreshCounts(){
+  try { counts.local = (await store.all()).filter(r => !r.deletedAt).length; } catch (e) { counts.local = null; }
+  counts.server = null;
+  if (sync.remote){
+    try {
+      const res = await fetch(sync.remote.baseUrl + '/sync/health', {
+        credentials: 'same-origin',
+        headers: Object.assign({ accept: 'application/json' },
+          sync.remote.token ? { authorization: 'Bearer ' + sync.remote.token } : {}),
+      });
+      if (res.ok){
+        const h = await res.json();
+        counts.server = typeof h.records === 'number' ? h.records : null;
+        counts.head = h.head || 0;
+      }
+    } catch (e) { /* offline: the local count still means something */ }
+  }
+  counts.checkedAt = Date.now();
+  try { renderSync(); } catch (e) {}
+}
+
 const SYNC_KEYS = { url:'pyramid.sync.url', token:'pyramid.sync.token', enabled:'pyramid.sync.enabled' };
 
 function portalMode(){
@@ -5515,7 +5631,9 @@ const sync = {
       this.engine.listen();
     } catch (e) { this.phase = 'error'; this.lastError = String(e.message || e); return renderSync(); }
 
+    requestPersistentStorage();        // enabling sync is the moment durability matters
     await this.run();
+    await refreshCounts();
     clearInterval(this.timer);
     this.timer = setInterval(() => this.run(), 60000);
     addEventListener('focus', () => this.run());
@@ -5562,7 +5680,17 @@ function renderSync(){
   const label = { off:'Off', idle:'Synced', syncing:'Syncing…', error:'Error', 'signed-out':'Signed out' }[sync.phase] || sync.phase;
   const dotCls = { idle:'ok', syncing:'warn', error:'crit', 'signed-out':'crit', off:'' }[sync.phase] || '';
 
+  const pState = { persisted:'Persisted', 'at-risk':'At risk', unsupported:'Unknown', unknown:'Checking…' }[persistence.state];
+  const pDot   = { persisted:'done', 'at-risk':'partial', unsupported:'empty', unknown:'empty' }[persistence.state];
+  const n = v => v === null || v === undefined ? '—' : String(v);
+
   host.innerHTML =
+    '<div class="hprow"><span class="hplab">This browser</span>' +
+      '<div class="syncstate"><i class="sdot ' + pDot + '"></i><b>' + pState + '</b></div>' +
+      '<p class="sfaint" style="margin:4px 0 0;line-height:1.45">' + esc(persistence.advice) + '</p></div>' +
+    '<div class="hprow"><span class="hplab">Records</span>' +
+      '<div class="syncstate"><span>' + n(counts.local) + ' here</span>' +
+      '<span class="sfaint">·</span><span>' + n(counts.server) + ' on the server</span></div></div>' +
     '<div class="hprow"><span class="hplab">Sync</span>' +
       '<div class="syncstate"><i class="sdot ' + (sync.phase==='idle'?'done':sync.phase==='off'?'empty':'partial') + '"></i>' +
       '<b>' + esc(label) + '</b><span class="sfaint">last ' + esc(when) + '</span></div></div>' +
@@ -6500,6 +6628,7 @@ const FMT_NOTE = {
   deck:'A ghost deck: every slide title is a complete sentence, which is what makes it an action title.',
   talk:'For saying out loud. Signposts the number of reasons up front so the listener can hold them.',
   outline:'The raw structure, numbered as in the key line.',
+  backup:'Every record in this app\u2019s store — all documents, and the tombstones that carry deletions. This is the file that lets a copy live anywhere without the server; Import merges it back by the same last-write-wins rule sync uses.',
   json:'The document as data — keep it, diff it, or feed it back in. This is the app\u2019s own save format.',
   graph:'Every idea as a typed entity and every relationship as a typed edge, for an ontology store. Claims keep a derivedFrom link back to the branch they were promoted from.',
   triples:'The same graph flattened to subject / predicate / object rows. Loads straight into pandas, a triple store, or a graph database.',
@@ -6781,6 +6910,9 @@ function renderExport(){
       L.push('  '.repeat(depth) + idx + '. ' + nd.text + (nd.note ? '\n' + '  '.repeat(depth + 1) + '↳ ' + nd.note : ''));
     });
     s = L.join('\n');
+  } else if (fmt === 'backup'){
+    s = '(loading every record\u2026)';
+    backupJSON().then(text => { if (S.fmt === 'backup'){ $('#exportOut').textContent = text; $('#dlBtn').hidden = !downloads; } });
   } else if (fmt === 'graph'){
     s = graphJSONLD(d);
   } else if (fmt === 'triples'){
@@ -6793,7 +6925,50 @@ function renderExport(){
   $('#fmtNote').textContent = FMT_NOTE[fmt];
   $('#dlBtn').hidden = !downloads;
 }
-const EXT = { brief:'md', memo:'md', email:'txt', deck:'txt', talk:'txt', outline:'md', json:'json', graph:'json', triples:'csv' };
+const EXT = { brief:'md', memo:'md', email:'txt', deck:'txt', talk:'txt', outline:'md', json:'json', graph:'json', triples:'csv', backup:'json' };
+
+/* ── backup and restore ───────────────────────────────────────────────
+   One file holding every record in the store, tombstones included, because a
+   backup that dropped them would resurrect deleted points the moment it was
+   imported. Import merges rather than replaces, by the same last-write-wins
+   rule the server uses (sync-kit's mergeRecord where it is available), so
+   importing the same file twice is a no-op and importing an older one cannot
+   undo newer work. */
+const BACKUP_SCHEMA = 'pyramid-records/1';
+
+async function backupJSON(){
+  const records = await store.all();
+  return JSON.stringify({
+    schema: BACKUP_SCHEMA, app: 'pyramid', exportedAt: new Date().toISOString(),
+    origin: store.origin, count: records.length,
+    live: records.filter(r => !r.deletedAt).length,
+    records: records.sort((a, b) => String(a.id).localeCompare(String(b.id))),
+  }, null, 2);
+}
+
+async function importBackup(text){
+  let file;
+  try { file = JSON.parse(text); } catch (e) { throw new Error('That file is not JSON.'); }
+  if (!file || file.schema !== BACKUP_SCHEMA || !Array.isArray(file.records))
+    throw new Error('That is not a Pyramid backup (expected schema "' + BACKUP_SCHEMA + '").');
+
+  const mine = {};
+  (await store.all()).forEach(r => { mine[r.id] = r; });
+  const merge = (a, b) => (window.SyncKit && SyncKit.mergeRecord) ? SyncKit.mergeRecord(a, b)
+    : (!a ? b : !b ? a
+      : b.updatedAt > a.updatedAt ? b
+      : a.updatedAt > b.updatedAt ? a
+      : String(b.origin || '') > String(a.origin || '') ? b : a);
+
+  const writes = [];
+  for (const incoming of file.records){
+    if (!incoming || typeof incoming.id !== 'string' || typeof incoming.updatedAt !== 'number') continue;
+    const winner = merge(mine[incoming.id], incoming);
+    if (!mine[incoming.id] || winner !== mine[incoming.id]) writes.push(winner);
+  }
+  if (writes.length) await store._write(writes);
+  return { read: file.records.length, applied: writes.length };
+}
 
 /* ───────────────────────── document list ────────────────────────── */
 function renderDocList(){
@@ -7303,7 +7478,7 @@ $('#depthSel').addEventListener('change', renderPyramid);
   });
   pop.addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.id === 'syncNow'){ sync.run(); return; }
+    if (b.id === 'syncNow'){ sync.run().then(refreshCounts); return; }
     if (b.dataset.syncOn){
       setSyncSetting('enabled', b.dataset.syncOn);
       sync.engine = null; sync.init();
@@ -7315,6 +7490,18 @@ $('#depthSel').addEventListener('change', renderPyramid);
   });
 })();
 
+$('#restoreFile').addEventListener('change', async e => {
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  e.target.value = '';
+  try {
+    const { read, applied } = await importBackup(await f.text());
+    S.list = await store.listDocs();
+    const d = await store.loadDoc(S.doc.id);
+    if (d){ S.doc = d; await refreshRecs(); }
+    renderAll(); refreshCounts();
+    toast(applied ? applied + ' of ' + read + ' records merged.' : 'Nothing new — this backup is already here.');
+  } catch (err) { toast(String(err.message || err)); }
+});
 $('#parseBtn').addEventListener('click', () => {
   const raw = $('#pasteBox').value;
   if (!raw.trim()) return toast('Paste a draft first.');
@@ -7371,6 +7558,7 @@ addEventListener('resize', () => {              // a narrower column wraps to mo
   else if (store.mode === 'local'){ dot.classList.remove('off'); lab.textContent = 'Saved in this browser'; }
   else { lab.textContent = 'This session only'; }
   if (portalMode()) $('#portalBar').hidden = false;
+  requestPersistentStorage();          // never awaited: the app must not wait on it
 
   S.list = await store.listDocs();
   if (S.list.length && S.doc.isExample){
@@ -7379,6 +7567,7 @@ addEventListener('resize', () => {              // a narrower column wraps to mo
   } else renderDocList();
 
   await sync.init();
+  refreshCounts();
 })();
 
 (async () => {
