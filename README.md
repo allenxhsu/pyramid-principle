@@ -77,9 +77,9 @@ changes nothing therefore writes nothing, editing one point moves exactly one
 clock, and a delete propagates as a tombstone instead of being resurrected by
 the next device to sync.
 
-Documents written before this are lifted into records once, on first load; the
-old `governing-thought.docs.v1` key is left in place so the lift can be rolled
-back by clearing `pyramid.records.v1`.
+Documents written before this are lifted into records once, on first load. The
+records themselves now live in IndexedDB rather than `localStorage` — see
+[Durability](#durability) for that move and the migration behind it.
 
 One departure from the spec is worth naming: `Point.group` stays an inline
 field rather than becoming its own record. It is 1:1 with the point whose
@@ -92,10 +92,6 @@ findings, the `derivedFrom` provenance map — travels under a single `x-pyramid
 key, so a strict reader can ignore it and a round-trip does not silently lose
 the analysis. Tombstones are included: a deletion that did not travel would come
 back from the next device to sync.
-
-*Not yet built:* the sync client itself. `../sync-kit` does not exist, so there
-is no third store backend and no Sync settings panel. The record shape, the
-clocks, the tombstones and the per-device `origin` are all in place for it.
 
 ## Data out
 
@@ -138,13 +134,14 @@ field** — swapping the document under a half-typed sentence loses the edit —
 which case they wait and the app says so.
 
 **Storage prefixes.** Nine apps share one origin, so an unprefixed key is a
-collision. Everything this app owns is `pyramid.*`: `pyramid.records`,
-`pyramid.meta`, `pyramid.origin`, `pyramid.sync.*`. `ui-kit.*` stays shared on
-purpose — that is how choosing a palette in one app changes all of them. The
-one pre-prefix key, `governing-thought.docs.v1`, is read only when the app is
-*not* on the Portal: off it, that is where the Mac app's real documents live;
-on it, no such data can exist and an unprefixed read would be the collision
-this rule is about.
+collision. Everything this app owns is `pyramid.*`: the device id
+(`pyramid.origin`), the sync settings (`pyramid.sync.*`) and the IndexedDB
+database, which is named `pyramid` too. `ui-kit.*` stays shared on purpose —
+that is how choosing a palette in one app changes all of them. The one
+pre-prefix key, `governing-thought.docs.v1`, is read only when the app is *not*
+on the Portal: off it, that is where the Mac app's real documents live; on it,
+no such data can exist and an unprefixed read would be the collision this rule
+is about.
 
 ## Durability
 
@@ -162,16 +159,21 @@ travel with them, or the first sync afterwards would re-upload everything or
 nothing depending on which way they were stale.
 
 Even IndexedDB is evictable unless the browser agrees to keep it, so the app
-asks (`navigator.storage.persist()`) on first launch and again whenever sync is
-enabled, never blocking on the answer. The Sync panel reports **Persisted** or
-**At risk** with the one thing that fixes it — install the app from the browser
-menu, or add it to the Home Screen on iPhone — beside the local record count and
-the server's own count from `/sync/health`, so *am I persisted in both places?*
-is a question the UI answers.
+asks — `SyncKit.requestPersistentStorage()` — on first launch and again
+whenever sync is enabled, never blocking on the answer. `SyncKit.storageStatus()`
+is the read-only twin, safe to call on any render because it never puts the
+question. The Sync panel reports **Persisted** or **At risk** with the one thing
+that fixes it — install the app from the browser menu, or add it to the Home
+Screen on iPhone — beside the bytes in use, the local record count and the
+server's own count from `/sync/health`, so *am I persisted in both places?* is a
+question the UI answers.
 
-`../sync-kit` has no `persistence.ts` and its IIFE exports no
-`requestPersistentStorage`, so this calls `navigator.storage` directly; the
-function is shaped to be swapped for the kit's when it grows one.
+One caveat worth knowing: sync-kit's own note says to ask from somewhere that
+makes sense to a person rather than at page load, **because Firefox turns the
+request into a prompt**. This app asks on first launch as specified, so Firefox
+users will see that prompt on their first visit. Moving the call to the sync
+panel's own button — and leaving only the read-only `storageStatus()` at
+launch — is a one-line change if that trade is the wrong way round.
 
 **Export → Everything (backup)** writes every record in the store, tombstones
 included — a backup that dropped them would resurrect deleted points on import.
