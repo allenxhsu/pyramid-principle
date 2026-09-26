@@ -47,6 +47,9 @@ const digest = text => createHash('sha256').update(text).digest('hex').slice(0, 
    `escape=script` on the marker means the one occurrence was written `<\\/script>`.
    The checker reverses it before diffing, so this stays a real byte comparison. */
 const unescapeScript = s => s.replaceAll('<\\/script>', '</script>');
+/* ...and putting it back, which --fix has to do or it would write the literal
+   `</script>` into the page and end the script it is embedded in. */
+const escapeScript = s => s.replaceAll('</script>', '<\\/script>');
 const END = /^.*@inline-end.*$/gm;
 
 const red = s => `\x1b[31m${s}\x1b[0m`;
@@ -158,6 +161,9 @@ for (const b of blocks) {
       bad++;
       if (fix) edits.push({ from: b.markerLine, to: b.markerLine.replace(`hash=${b.hash}`, `hash=${h}`) });
     } else {
+      // The hash is what a port is judged on; the commit is provenance, so keep it current.
+      if (fix && now && now !== b.commit)
+        edits.push({ from: b.markerLine, to: b.markerLine.replace(`commit=${b.commit}`, `commit=${now}`) });
       console.log(`${green('ok')}       ${label} ${dim('port @ ' + h + (dirty ? ', source uncommitted' : ''))}`);
     }
     continue;
@@ -189,7 +195,7 @@ for (const b of blocks) {
     `          ${dim('source :')} ${JSON.stringify((c[first] ?? '').slice(0, 72))}`);
   bad++;
   if (fix) {
-    edits.push({ replaceRange: [b.bodyStart, b.bodyEnd], with: want + '\n' });
+    edits.push({ replaceRange: [b.bodyStart, b.bodyEnd], with: (b.escaped ? escapeScript(want) : want) + '\n' });
     if (now && now !== b.commit)
       edits.push({ from: b.markerLine, to: b.markerLine.replace(`commit=${b.commit}`, `commit=${now}`) });
     fixed++;

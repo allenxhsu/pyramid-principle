@@ -40,15 +40,25 @@ open "build/Pyramid Principle.app"
 
 ## Appearance
 
-Pyramid shares its HUD skin with the other tools in
-[ui-kit](https://github.com/kasinox/ui-kit) (Metropolis, Heptabase, IDEF0) —
-Orbitron/Exo 2/Share Tech Mono, chamfered controls, corner-bracket panels.
-Because this is a single bundled file with no access to a sibling folder at
-runtime, it inlines a verbatim copy of the kit's CSS and a plain (non-module)
-port of its theme runtime rather than linking the kit live; the canonical
-adapter lives at `ui-kit/adapters/pyramid.css` in that repo and gets re-copied
-in by hand when it changes. A picker in the top bar (▦) switches skin
-(HUD/Classic), palette (Steel/Crystal/Chitin) and effects.
+Pyramid shares its skin with the other tools in
+[ui-kit](https://github.com/kasinox/ui-kit) (Metropolis, Heptabase, IDEF0). The
+kit draws the same markup two ways: the **HUD** — Orbitron/Exo 2/Share Tech
+Mono, chamfered controls, corner-bracket panels — and **macOS**, the platform's
+own idiom in system fonts and rounded corners, with a light and a dark
+appearance. A picker in the top bar (▦) chooses the interface and then
+whatever applies to it: palette (Steel/Crystal/Chitin) and effects under the
+HUD, appearance (Auto/Light/Dark) under macOS, where Auto follows the system and
+re-applies when it flips. Because this is a single bundled file with no access to
+a sibling folder at runtime, it inlines a verbatim copy of the kit's CSS and a
+plain (non-module) port of its theme runtime rather than linking the kit live;
+the canonical adapter lives at `ui-kit/adapters/pyramid.css` in that repo and
+gets re-copied in by hand when it changes.
+
+The kit retired its third interface, Classic — each app's own pre-kit styling,
+with the skin switched off — so Pyramid's original serif look is no longer
+reachable from the picker, and a stored preference for it reads as the HUD.
+`ui-kit.skin` is shared by every app on the origin, so keeping Classic here would
+have meant this one app disagreeing with the rest about what that value means.
 
 ## What the checks enforce
 
