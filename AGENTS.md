@@ -20,7 +20,15 @@ Rules for any agent (or person) making changes in this repository.
 - Run the new tests and confirm they fail before you start the implementation.
 - The feature is complete only when all of its tests pass.
 
-## 3. Keep code modular
+## 3. Design the UI concept for each module before writing code
+
+- After the tests are written and before any code is written, design the UI
+  concept for each module that has a user interface.
+- Decide the screens, layout, main components, user flows, and the states
+  each screen can be in (empty, loading, error, success).
+- Get the UI concept agreed on before writing the module's code.
+
+## 4. Keep code modular
 
 - Split the code into modules so each feature depends on as little of the
   rest of the codebase as possible.
@@ -28,7 +36,7 @@ Rules for any agent (or person) making changes in this repository.
 - Do not reach into another module's internals. Use its public interface.
 - Avoid circular dependencies and shared global state between modules.
 
-## 4. Use tests to keep the codebase small
+## 5. Use tests to keep the codebase small
 
 - Use the tests to find code that isn't needed: remove a piece of code and run
   the tests.
@@ -36,7 +44,7 @@ Rules for any agent (or person) making changes in this repository.
   if it's unneeded. If it's needed, add a test that fails without it.
 - Prefer the smallest amount of code that passes all tests.
 
-## 5. Commit every change
+## 6. Commit every change
 
 - Make a git commit after every change, so each change can be tracked and
   rolled back later.
@@ -44,18 +52,18 @@ Rules for any agent (or person) making changes in this repository.
   changed and why.
 - Never leave finished work uncommitted.
 
-## 6. Run the full test suite after every change
+## 7. Run the full test suite after every change
 
 - After every change, run the tests for all modules, not only the module you
   changed, to confirm nothing else broke.
 - If any test fails, fix it before moving on.
 
-## 7. Deliver only when every test passes
+## 8. Deliver only when every test passes
 
 - All tests must pass before delivery.
 - Do not skip, disable, or delete a test to get the suite passing.
 
-## 8. Keep local and online versions in sync
+## 9. Keep local and online versions in sync
 
 - If the software has both a local version and an online version, their data
   must stay in sync.
