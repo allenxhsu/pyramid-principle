@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-26 -36 992 952" width="992" height="952"><style>
+text{font-family:Helvetica, Arial, sans-serif;font-size:12px;fill:#111418;dominant-baseline:auto}
+.d-mono{font-family:Menlo, Consolas, monospace;font-size:11px;fill:#2d343c}
+.d-name{font-family:Helvetica, Arial, sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.04em}
+.d-italic{font-style:italic}
+.d-comp{font-size:10.5px;font-style:italic;fill:#5b6470}
+.d-frame{fill:none;stroke:#111418;stroke-width:1}
+.d-frame-tab{fill:#ffffff;stroke:#111418;stroke-width:1}
+.d-sym .d-shape{fill:#f4f8fd;stroke:#111418}
+.d-sym .d-rule,.d-sym .d-stick{stroke:#111418}
+.d-sym.c-b .d-shape{fill:#fdf8ee;stroke:#111418}
+.d-sym.c-b .d-rule,.d-sym.c-b .d-stick{stroke:#111418}
+.d-sym.c-c .d-shape{fill:#fbf3f6;stroke:#111418}
+.d-sym.c-c .d-rule,.d-sym.c-c .d-stick{stroke:#111418}
+.d-sym.c-n .d-shape{fill:#fffbe6;stroke:#5b6470}
+.d-sym.c-n .d-rule,.d-sym.c-n .d-stick{stroke:#5b6470}
+.d-shape{stroke-width:1.2}
+.d-shape.dashed{stroke-dasharray:6 4}
+.d-rule{stroke-width:.8;opacity:.55;fill:none}
+.d-stick{fill:none;stroke-width:1.5}
+.d-port{fill:#ffffff;stroke:#111418;stroke-width:1.2}
+.d-port-dir{fill:#111418;stroke:none}
+.d-line{fill:none;stroke:#2d343c;stroke-width:1.2}
+.d-line.dashed{stroke-dasharray:6 4}
+.d-head{fill:none;stroke:#2d343c;stroke-width:1.2}
+.d-head.filled{fill:#2d343c}
+.d-head.hollow{fill:#ffffff}
+.d-hit{fill:none;stroke:transparent;stroke-width:12}
+.d-label-bg{fill:#ffffff;opacity:.85}
+</style><rect x="-26" y="-36" width="992" height="952" fill="#fff"/><rect class="d-frame" x="-10" y="-20" width="960" height="920"/><path class="d-frame-tab" d="M-10 -20h278.8v14l-10 10H-10z"/><text class="d-mono" x="0" y="-4">bdd [package] Toolkit [In the toolkit]</text><g class="d-symbols"><g class="d-sym " data-sym="sy_027" transform="translate(40 40)"><rect class="d-shape" width="200" height="50"/><text class="d-mono" x="100" y="19" text-anchor="middle">«block»</text><text class="d-name" x="100" y="36" text-anchor="middle">Pyramid.app</text></g><g class="d-sym " data-sym="sy_028" transform="translate(360 40)"><rect class="d-shape" width="220" height="50"/><text class="d-mono" x="110" y="19" text-anchor="middle">«block»</text><text class="d-name" x="110" y="36" text-anchor="middle">toolkit-portal</text></g><g class="d-sym " data-sym="sy_029" transform="translate(700 40)"><rect class="d-shape" width="200" height="50"/><text class="d-mono" x="100" y="19" text-anchor="middle">«block»</text><text class="d-name" x="100" y="36" text-anchor="middle">Metropolis</text></g><g class="d-sym " data-sym="sy_030" transform="translate(340 300)"><rect class="d-shape" width="260" height="50"/><text class="d-mono" x="130" y="19" text-anchor="middle">«block»</text><text class="d-name" x="130" y="36" text-anchor="middle">Pyramid Principle</text></g><g class="d-sym " data-sym="sy_031" transform="translate(100 560)"><rect class="d-shape" width="180" height="50"/><text class="d-mono" x="90" y="19" text-anchor="middle">«block»</text><text class="d-name" x="90" y="36" text-anchor="middle">ui-kit</text></g><g class="d-sym " data-sym="sy_032" transform="translate(520 560)"><rect class="d-shape" width="200" height="50"/><text class="d-mono" x="100" y="19" text-anchor="middle">«block»</text><text class="d-name" x="100" y="36" text-anchor="middle">sync-kit</text></g><g class="d-sym " data-sym="sy_033" transform="translate(500 800)"><rect class="d-shape" width="240" height="50"/><text class="d-mono" x="120" y="19" text-anchor="middle">«block»</text><text class="d-name" x="120" y="36" text-anchor="middle">Sync server</text></g></g><g class="d-paths"><g class="d-path" data-path="pa_026"><path class="d-hit" d="M470 90L470 195L470 300"/><path class="d-line dashed" d="M470 90L470 195L470 300"/><path class="d-head" transform="translate(470 300) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="476" y="135.5" width="113.6" height="15"/><text class="d-mono" x="532.8" y="146.5" text-anchor="middle">toolkit-app.json</text></g><g class="d-path" data-path="pa_027"><path class="d-hit" d="M140 90L140 195L405 195L405 300"/><path class="d-line dashed" d="M140 90L140 195L405 195L405 300"/><path class="d-head" transform="translate(405 300) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="252" y="177" width="41" height="15"/><text class="d-mono" x="272.5" y="188" text-anchor="middle">hosts</text></g><g class="d-path" data-path="pa_028"><path class="d-hit" d="M800 90L800 195L535 195L535 300"/><path class="d-line dashed" d="M800 90L800 195L535 195L535 300"/><path class="d-head" transform="translate(535 300) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="610.7" y="177" width="113.6" height="15"/><text class="d-mono" x="667.5" y="188" text-anchor="middle">pyramid/1 export</text></g><g class="d-path" data-path="pa_029"><path class="d-hit" d="M427 350L427 455L190 455L190 560"/><path class="d-line dashed" d="M427 350L427 455L190 455L190 560"/><path class="d-head" transform="translate(190 560) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="208.8" y="437" width="199.4" height="15"/><text class="d-mono" x="308.5" y="448" text-anchor="middle">inlined CSS + ported theme.js</text></g><g class="d-path" data-path="pa_030"><path class="d-hit" d="M513 350L513 455L620 455L620 560"/><path class="d-line dashed" d="M513 350L513 455L620 455L620 560"/><path class="d-head" transform="translate(620 560) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="522.9" y="437" width="87.2" height="15"/><text class="d-mono" x="566.5" y="448" text-anchor="middle">inlined IIFE</text></g><g class="d-path" data-path="pa_031"><path class="d-hit" d="M620 610L620 705L620 800"/><path class="d-line dashed" d="M620 610L620 705L620 800"/><path class="d-head" transform="translate(620 800) rotate(90)" d="M-11 -5L0 0L-11 5"/><rect class="d-label-bg" x="626" y="650.5" width="107" height="15"/><text class="d-mono" x="679.5" y="661.5" text-anchor="middle">/w/pyramid/sync</text></g></g><g class="d-ports"></g></svg>

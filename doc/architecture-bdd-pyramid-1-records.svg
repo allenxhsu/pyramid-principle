@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-26 -36 1592 532" width="1592" height="532"><style>
+text{font-family:Helvetica, Arial, sans-serif;font-size:12px;fill:#111418;dominant-baseline:auto}
+.d-mono{font-family:Menlo, Consolas, monospace;font-size:11px;fill:#2d343c}
+.d-name{font-family:Helvetica, Arial, sans-serif;font-size:12.5px;font-weight:600;letter-spacing:.04em}
+.d-italic{font-style:italic}
+.d-comp{font-size:10.5px;font-style:italic;fill:#5b6470}
+.d-frame{fill:none;stroke:#111418;stroke-width:1}
+.d-frame-tab{fill:#ffffff;stroke:#111418;stroke-width:1}
+.d-sym .d-shape{fill:#f4f8fd;stroke:#111418}
+.d-sym .d-rule,.d-sym .d-stick{stroke:#111418}
+.d-sym.c-b .d-shape{fill:#fdf8ee;stroke:#111418}
+.d-sym.c-b .d-rule,.d-sym.c-b .d-stick{stroke:#111418}
+.d-sym.c-c .d-shape{fill:#fbf3f6;stroke:#111418}
+.d-sym.c-c .d-rule,.d-sym.c-c .d-stick{stroke:#111418}
+.d-sym.c-n .d-shape{fill:#fffbe6;stroke:#5b6470}
+.d-sym.c-n .d-rule,.d-sym.c-n .d-stick{stroke:#5b6470}
+.d-shape{stroke-width:1.2}
+.d-shape.dashed{stroke-dasharray:6 4}
+.d-rule{stroke-width:.8;opacity:.55;fill:none}
+.d-stick{fill:none;stroke-width:1.5}
+.d-port{fill:#ffffff;stroke:#111418;stroke-width:1.2}
+.d-port-dir{fill:#111418;stroke:none}
+.d-line{fill:none;stroke:#2d343c;stroke-width:1.2}
+.d-line.dashed{stroke-dasharray:6 4}
+.d-head{fill:none;stroke:#2d343c;stroke-width:1.2}
+.d-head.filled{fill:#2d343c}
+.d-head.hollow{fill:#ffffff}
+.d-hit{fill:none;stroke:transparent;stroke-width:12}
+.d-label-bg{fill:#ffffff;opacity:.85}
+</style><rect x="-26" y="-36" width="1592" height="532" fill="#fff"/><rect class="d-frame" x="-10" y="-20" width="1560" height="500"/><path class="d-frame-tab" d="M-10 -20h311.8v14l-10 10H-10z"/><text class="d-mono" x="0" y="-4">bdd [package] pyramid/1 [pyramid/1 records]</text><g class="d-symbols"><g class="d-sym " data-sym="sy_020" transform="translate(520 40)"><rect class="d-shape" width="300" height="50"/><text class="d-mono" x="150" y="19" text-anchor="middle">«block»</text><text class="d-name" x="150" y="36" text-anchor="middle">Record</text></g><g class="d-sym " data-sym="sy_021" transform="translate(40 320)"><rect class="d-shape" width="200" height="50"/><text class="d-mono" x="100" y="19" text-anchor="middle">«block»</text><text class="d-name" x="100" y="36" text-anchor="middle">pyramid</text></g><g class="d-sym " data-sym="sy_022" transform="translate(280 320)"><rect class="d-shape" width="260" height="101"/><text class="d-mono" x="130" y="19" text-anchor="middle">«block»</text><text class="d-name" x="130" y="36" text-anchor="middle">point</text><path class="d-rule" d="M0 46H260"/><text class="d-comp" x="130" y="61" text-anchor="middle">references</text><text x="10" y="77">pyramid : pyramid</text><text x="10" y="93">parent : point [0..1]</text></g><g class="d-sym " data-sym="sy_023" transform="translate(580 320)"><rect class="d-shape" width="180" height="85"/><text class="d-mono" x="90" y="19" text-anchor="middle">«block»</text><text class="d-name" x="90" y="36" text-anchor="middle">evidence</text><path class="d-rule" d="M0 46H180"/><text class="d-comp" x="90" y="61" text-anchor="middle">references</text><text x="10" y="77">point : point</text></g><g class="d-sym " data-sym="sy_024" transform="translate(800 320)"><rect class="d-shape" width="180" height="85"/><text class="d-mono" x="90" y="19" text-anchor="middle">«block»</text><text class="d-name" x="90" y="36" text-anchor="middle">question</text><path class="d-rule" d="M0 46H180"/><text class="d-comp" x="90" y="61" text-anchor="middle">references</text><text x="10" y="77">point : point</text></g><g class="d-sym " data-sym="sy_025" transform="translate(1020 320)"><rect class="d-shape" width="180" height="85"/><text class="d-mono" x="90" y="19" text-anchor="middle">«block»</text><text class="d-name" x="90" y="36" text-anchor="middle">reference</text><path class="d-rule" d="M0 46H180"/><text class="d-comp" x="90" y="61" text-anchor="middle">references</text><text x="10" y="77">evidence : evidence [0..1]</text></g><g class="d-sym " data-sym="sy_026" transform="translate(1240 40)"><rect class="d-shape" width="260" height="50"/><text class="d-mono" x="130" y="19" text-anchor="middle">«block»</text><text class="d-name" x="130" y="36" text-anchor="middle">x-pyramid</text></g></g><g class="d-paths"><g class="d-path" data-path="pa_021"><path class="d-hit" d="M140 320L140 205L670 205L670 90"/><path class="d-line" d="M140 320L140 205L670 205L670 90"/><path class="d-head hollow" transform="translate(670 90) rotate(-90)" d="M-13 -7L0 0L-13 7Z"/></g><g class="d-path" data-path="pa_022"><path class="d-hit" d="M410 320L410 205L670 205L670 90"/><path class="d-line" d="M410 320L410 205L670 205L670 90"/><path class="d-head hollow" transform="translate(670 90) rotate(-90)" d="M-13 -7L0 0L-13 7Z"/></g><g class="d-path" data-path="pa_023"><path class="d-hit" d="M670 320L670 205L670 90"/><path class="d-line" d="M670 320L670 205L670 90"/><path class="d-head hollow" transform="translate(670 90) rotate(-90)" d="M-13 -7L0 0L-13 7Z"/></g><g class="d-path" data-path="pa_024"><path class="d-hit" d="M890 320L890 205L670 205L670 90"/><path class="d-line" d="M890 320L890 205L670 205L670 90"/><path class="d-head hollow" transform="translate(670 90) rotate(-90)" d="M-13 -7L0 0L-13 7Z"/></g><g class="d-path" data-path="pa_025"><path class="d-hit" d="M1110 320L1110 205L670 205L670 90"/><path class="d-line" d="M1110 320L1110 205L670 205L670 90"/><path class="d-head hollow" transform="translate(670 90) rotate(-90)" d="M-13 -7L0 0L-13 7Z"/></g></g><g class="d-ports"></g></svg>

@@ -1,0 +1,1977 @@
+{
+  "format": "sysml-modeler",
+  "version": 1,
+  "name": "Pyramid Principle architecture",
+  "rootId": "pa_001",
+  "elements": {
+    "pa_001": {
+      "id": "pa_001",
+      "kind": "package",
+      "name": "Pyramid Principle architecture",
+      "ownerId": null,
+      "doc": ""
+    },
+    "pa_002": {
+      "id": "pa_002",
+      "kind": "package",
+      "name": "governing-thought.html",
+      "ownerId": "pa_001",
+      "doc": "The whole application, one file, no build step: structure, the deterministic lint engine, the graph export, everything — and inlined copies of ui-kit, sync-kit and six font families, so it references no external origin."
+    },
+    "pa_003": {
+      "id": "pa_003",
+      "kind": "package",
+      "name": "mac",
+      "ownerId": "pa_001",
+      "doc": "main.swift — a standalone universal .app around the same file: WKWebView over a custom gt:// scheme. No Electron, no Node, no network. (Not shell-kit.)"
+    },
+    "pa_006": {
+      "id": "pa_006",
+      "kind": "package",
+      "name": "scripts",
+      "ownerId": "pa_001",
+      "doc": "check-inline.mjs — are the inlined kit copies current?"
+    },
+    "pa_004": {
+      "id": "pa_004",
+      "kind": "package",
+      "name": "pyramid/1",
+      "ownerId": "pa_001",
+      "doc": "The store works on records, one per pyramid, point, evidence item, question and reference."
+    },
+    "pa_007": {
+      "id": "pa_007",
+      "kind": "package",
+      "name": "Toolkit",
+      "ownerId": "pa_001",
+      "doc": ""
+    },
+    "pa_008": {
+      "id": "pa_008",
+      "kind": "package",
+      "name": "Use cases",
+      "ownerId": "pa_001",
+      "doc": ""
+    },
+    "pa_005": {
+      "id": "pa_005",
+      "kind": "package",
+      "name": "Rules",
+      "ownerId": "pa_001",
+      "doc": ""
+    },
+    "bl_009": {
+      "id": "bl_009",
+      "kind": "block",
+      "name": "Pyramid Principle",
+      "ownerId": "pa_002",
+      "doc": "Served as a file, by python -m http.server, inside the Mac app, or at /pyramid/ on the Portal.",
+      "isAbstract": false
+    },
+    "bl_007": {
+      "id": "bl_007",
+      "kind": "block",
+      "name": "Problem definition",
+      "ownerId": "pa_002",
+      "doc": "Minto’s R1/R2 gap framework: situation, complication, question.",
+      "isAbstract": false
+    },
+    "bl_005": {
+      "id": "bl_005",
+      "kind": "block",
+      "name": "Logic tree",
+      "ownerId": "pa_002",
+      "doc": "A tested why/how decomposition of the problem.",
+      "isAbstract": false
+    },
+    "bl_008": {
+      "id": "bl_008",
+      "kind": "block",
+      "name": "Pyramid editor",
+      "ownerId": "pa_002",
+      "doc": "What survives is promoted into a governing thought and a key line; derivedFrom records where each claim came from.",
+      "isAbstract": false
+    },
+    "bl_004": {
+      "id": "bl_004",
+      "kind": "block",
+      "name": "Lint engine",
+      "ownerId": "pa_002",
+      "doc": "26 structural checks, re-run on every edit, scoped to the step: problem definition, analysis structure, the introduction, vertical and horizontal logic. Heuristics on English — dismissable.",
+      "isAbstract": false
+    },
+    "bl_013": {
+      "id": "bl_013",
+      "kind": "block",
+      "name": "Walkthrough",
+      "ownerId": "pa_002",
+      "doc": "Twelve interactive lessons in Minto’s own illustrations, beside a worked example; the Guide view documents every rule.",
+      "isAbstract": false
+    },
+    "bl_002": {
+      "id": "bl_002",
+      "kind": "block",
+      "name": "Exporters",
+      "ownerId": "pa_002",
+      "doc": "Memo, email, slide outline, talk track; pyramid/1 JSON; JSON-LD graph and CSV triples, ids namespaced urn:pyramid:<doc>:<kind>:<node>.",
+      "isAbstract": false
+    },
+    "bl_001": {
+      "id": "bl_001",
+      "kind": "block",
+      "name": "Document",
+      "ownerId": "pa_002",
+      "doc": "The nested document the editor, the checks and the walkthrough work on.",
+      "isAbstract": false
+    },
+    "bl_010": {
+      "id": "bl_010",
+      "kind": "block",
+      "name": "Record projection",
+      "ownerId": "pa_002",
+      "doc": "projectDoc() flattens the document into records; materialise() rebuilds it. Clocks are set by diffing, not by the editor.",
+      "isAbstract": false
+    },
+    "bl_006": {
+      "id": "bl_006",
+      "kind": "block",
+      "name": "Persistence",
+      "ownerId": "pa_002",
+      "doc": "IndexedDB database pyramid; storage.persist() asked and reported.",
+      "isAbstract": false
+    },
+    "bl_011": {
+      "id": "bl_011",
+      "kind": "block",
+      "name": "Sync",
+      "ownerId": "pa_002",
+      "doc": "The inlined sync-kit IIFE. Pulls then pushes on a timer, on focus, on reconnect and once an edit has settled.",
+      "isAbstract": false
+    },
+    "bl_012": {
+      "id": "bl_012",
+      "kind": "block",
+      "name": "Theme",
+      "ownerId": "pa_002",
+      "doc": "A verbatim copy of ui-kit’s CSS and a plain (non-module) port of theme.js, re-copied by hand.",
+      "isAbstract": false
+    },
+    "bl_003": {
+      "id": "bl_003",
+      "kind": "block",
+      "name": "Host capabilities",
+      "ownerId": "pa_002",
+      "doc": "window.claude db/downloads when the page runs inside a host that offers them; localStorage otherwise.",
+      "isAbstract": false
+    },
+    "pr_006": {
+      "id": "pr_006",
+      "kind": "property",
+      "name": "problem",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_007",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_011": {
+      "id": "pr_011",
+      "kind": "property",
+      "name": "tree",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_005",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_007": {
+      "id": "pr_007",
+      "kind": "property",
+      "name": "pyramid",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_008",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_004": {
+      "id": "pr_004",
+      "kind": "property",
+      "name": "lint",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_004",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_012": {
+      "id": "pr_012",
+      "kind": "property",
+      "name": "walkthrough",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_013",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_002": {
+      "id": "pr_002",
+      "kind": "property",
+      "name": "exports",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_002",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_001": {
+      "id": "pr_001",
+      "kind": "property",
+      "name": "document",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_001",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_008": {
+      "id": "pr_008",
+      "kind": "property",
+      "name": "records",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_010",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_005": {
+      "id": "pr_005",
+      "kind": "property",
+      "name": "persistence",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_006",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_009": {
+      "id": "pr_009",
+      "kind": "property",
+      "name": "sync",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_011",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_010": {
+      "id": "pr_010",
+      "kind": "property",
+      "name": "theme",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_012",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_003": {
+      "id": "pr_003",
+      "kind": "property",
+      "name": "host",
+      "ownerId": "bl_009",
+      "doc": "",
+      "propKind": "part",
+      "typeId": "bl_003",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "bl_018": {
+      "id": "bl_018",
+      "kind": "block",
+      "name": "Record",
+      "ownerId": "pa_004",
+      "doc": "{ id, createdAt, updatedAt, deletedAt, origin } — the sync-protocol contract.",
+      "isAbstract": false
+    },
+    "bl_016": {
+      "id": "bl_016",
+      "kind": "block",
+      "name": "pyramid",
+      "ownerId": "pa_004",
+      "doc": "One argument: governing thought, key line.",
+      "isAbstract": false
+    },
+    "bl_015": {
+      "id": "bl_015",
+      "kind": "block",
+      "name": "point",
+      "ownerId": "pa_004",
+      "doc": "An idea in a box. Point.group stays inline: it is 1:1 with the point, so it has no identity to sync.",
+      "isAbstract": false
+    },
+    "bl_014": {
+      "id": "bl_014",
+      "kind": "block",
+      "name": "evidence",
+      "ownerId": "pa_004",
+      "doc": "",
+      "isAbstract": false
+    },
+    "bl_017": {
+      "id": "bl_017",
+      "kind": "block",
+      "name": "question",
+      "ownerId": "pa_004",
+      "doc": "",
+      "isAbstract": false
+    },
+    "bl_019": {
+      "id": "bl_019",
+      "kind": "block",
+      "name": "reference",
+      "ownerId": "pa_004",
+      "doc": "",
+      "isAbstract": false
+    },
+    "pr_015": {
+      "id": "pr_015",
+      "kind": "property",
+      "name": "pyramid",
+      "ownerId": "bl_015",
+      "doc": "",
+      "propKind": "reference",
+      "typeId": "bl_016",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_014": {
+      "id": "pr_014",
+      "kind": "property",
+      "name": "parent",
+      "ownerId": "bl_015",
+      "doc": "",
+      "propKind": "reference",
+      "typeId": "bl_015",
+      "typeText": "",
+      "multiplicity": "0..1",
+      "defaultValue": ""
+    },
+    "pr_013": {
+      "id": "pr_013",
+      "kind": "property",
+      "name": "point",
+      "ownerId": "bl_014",
+      "doc": "",
+      "propKind": "reference",
+      "typeId": "bl_015",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_016": {
+      "id": "pr_016",
+      "kind": "property",
+      "name": "point",
+      "ownerId": "bl_017",
+      "doc": "",
+      "propKind": "reference",
+      "typeId": "bl_015",
+      "typeText": "",
+      "multiplicity": "1",
+      "defaultValue": ""
+    },
+    "pr_017": {
+      "id": "pr_017",
+      "kind": "property",
+      "name": "evidence",
+      "ownerId": "bl_019",
+      "doc": "",
+      "propKind": "reference",
+      "typeId": "bl_014",
+      "typeText": "",
+      "multiplicity": "0..1",
+      "defaultValue": ""
+    },
+    "bl_020": {
+      "id": "bl_020",
+      "kind": "block",
+      "name": "x-pyramid",
+      "ownerId": "pa_004",
+      "doc": "In an export: the problem definition, the tree, dismissed findings and derivedFrom, under one key a strict reader can ignore.",
+      "isAbstract": false
+    },
+    "va_001": {
+      "id": "va_001",
+      "kind": "valueType",
+      "name": "Doc",
+      "ownerId": "pa_002",
+      "doc": "",
+      "unit": "the nested document"
+    },
+    "va_003": {
+      "id": "va_003",
+      "kind": "valueType",
+      "name": "Records",
+      "ownerId": "pa_004",
+      "doc": "",
+      "unit": "pyramid/1 records, tombstones included"
+    },
+    "va_002": {
+      "id": "va_002",
+      "kind": "valueType",
+      "name": "Findings",
+      "ownerId": "pa_002",
+      "doc": "",
+      "unit": ""
+    },
+    "po_007": {
+      "id": "po_007",
+      "kind": "port",
+      "name": "edit",
+      "ownerId": "bl_008",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "out",
+      "multiplicity": "1"
+    },
+    "po_008": {
+      "id": "po_008",
+      "kind": "port",
+      "name": "margin",
+      "ownerId": "bl_008",
+      "doc": "",
+      "typeId": "va_002",
+      "typeText": "",
+      "direction": "in",
+      "multiplicity": "1"
+    },
+    "po_002": {
+      "id": "po_002",
+      "kind": "port",
+      "name": "edit",
+      "ownerId": "bl_001",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "in",
+      "multiplicity": "1"
+    },
+    "po_001": {
+      "id": "po_001",
+      "kind": "port",
+      "name": "doc",
+      "ownerId": "bl_001",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "out",
+      "multiplicity": "1"
+    },
+    "po_003": {
+      "id": "po_003",
+      "kind": "port",
+      "name": "materialised",
+      "ownerId": "bl_001",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "in",
+      "multiplicity": "1"
+    },
+    "po_004": {
+      "id": "po_004",
+      "kind": "port",
+      "name": "doc",
+      "ownerId": "bl_004",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "in",
+      "multiplicity": "1"
+    },
+    "po_005": {
+      "id": "po_005",
+      "kind": "port",
+      "name": "findings",
+      "ownerId": "bl_004",
+      "doc": "",
+      "typeId": "va_002",
+      "typeText": "",
+      "direction": "out",
+      "multiplicity": "1"
+    },
+    "po_010": {
+      "id": "po_010",
+      "kind": "port",
+      "name": "doc",
+      "ownerId": "bl_010",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "in",
+      "multiplicity": "1"
+    },
+    "po_012": {
+      "id": "po_012",
+      "kind": "port",
+      "name": "records",
+      "ownerId": "bl_010",
+      "doc": "",
+      "typeId": "va_003",
+      "typeText": "",
+      "direction": "inout",
+      "multiplicity": "1"
+    },
+    "po_011": {
+      "id": "po_011",
+      "kind": "port",
+      "name": "materialise",
+      "ownerId": "bl_010",
+      "doc": "",
+      "typeId": "va_001",
+      "typeText": "",
+      "direction": "out",
+      "multiplicity": "1"
+    },
+    "po_006": {
+      "id": "po_006",
+      "kind": "port",
+      "name": "records",
+      "ownerId": "bl_006",
+      "doc": "",
+      "typeId": "va_003",
+      "typeText": "",
+      "direction": "inout",
+      "multiplicity": "1"
+    },
+    "po_013": {
+      "id": "po_013",
+      "kind": "port",
+      "name": "records",
+      "ownerId": "bl_011",
+      "doc": "",
+      "typeId": "va_003",
+      "typeText": "",
+      "direction": "inout",
+      "multiplicity": "1"
+    },
+    "po_014": {
+      "id": "po_014",
+      "kind": "port",
+      "name": "server",
+      "ownerId": "bl_011",
+      "doc": "",
+      "typeId": "va_003",
+      "typeText": "",
+      "direction": "inout",
+      "multiplicity": "1"
+    },
+    "po_009": {
+      "id": "po_009",
+      "kind": "port",
+      "name": "sync server",
+      "ownerId": "bl_009",
+      "doc": "",
+      "typeId": "va_003",
+      "typeText": "",
+      "direction": "inout",
+      "multiplicity": "1"
+    },
+    "bl_026": {
+      "id": "bl_026",
+      "kind": "block",
+      "name": "ui-kit",
+      "ownerId": "pa_007",
+      "doc": "The shared HUD: tokens, CSS, theme runtime, web components.",
+      "isAbstract": false
+    },
+    "bl_024": {
+      "id": "bl_024",
+      "kind": "block",
+      "name": "sync-kit",
+      "ownerId": "pa_007",
+      "doc": "The record-sync client: SyncEngine, a store, HttpTransport.",
+      "isAbstract": false
+    },
+    "bl_023": {
+      "id": "bl_023",
+      "kind": "block",
+      "name": "Sync server",
+      "ownerId": "pa_007",
+      "doc": "sync-kit/server — this app’s records live in workspace “pyramid”.",
+      "isAbstract": false
+    },
+    "bl_025": {
+      "id": "bl_025",
+      "kind": "block",
+      "name": "toolkit-portal",
+      "ownerId": "pa_007",
+      "doc": "Collects the app from toolkit-app.json and serves it at /pyramid/ on one origin.",
+      "isAbstract": false
+    },
+    "bl_022": {
+      "id": "bl_022",
+      "kind": "block",
+      "name": "Pyramid.app",
+      "ownerId": "pa_007",
+      "doc": "mac/main.swift: the same file in a WKWebView over gt://app — a fixed origin, so localStorage survives quitting.",
+      "isAbstract": false
+    },
+    "bl_021": {
+      "id": "bl_021",
+      "kind": "block",
+      "name": "Metropolis",
+      "ownerId": "pa_007",
+      "doc": "Reads the pyramid/1 export; keeping Point.group inline is what keeps it readable there.",
+      "isAbstract": false
+    },
+    "ac_002": {
+      "id": "ac_002",
+      "kind": "actor",
+      "name": "Writer",
+      "ownerId": "pa_008",
+      "doc": ""
+    },
+    "ac_001": {
+      "id": "ac_001",
+      "kind": "actor",
+      "name": "Downstream tool",
+      "ownerId": "pa_008",
+      "doc": ""
+    },
+    "us_005": {
+      "id": "us_005",
+      "kind": "useCase",
+      "name": "Define the problem",
+      "ownerId": "pa_008",
+      "doc": "R1/R2: situation, complication, question."
+    },
+    "us_004": {
+      "id": "us_004",
+      "kind": "useCase",
+      "name": "Decompose it",
+      "ownerId": "pa_008",
+      "doc": "A why/how tree, tested."
+    },
+    "us_003": {
+      "id": "us_003",
+      "kind": "useCase",
+      "name": "Build the pyramid",
+      "ownerId": "pa_008",
+      "doc": "Governing thought, key line, groups of three to five."
+    },
+    "us_002": {
+      "id": "us_002",
+      "kind": "useCase",
+      "name": "Answer the checks",
+      "ownerId": "pa_008",
+      "doc": ""
+    },
+    "us_007": {
+      "id": "us_007",
+      "kind": "useCase",
+      "name": "Learn the method",
+      "ownerId": "pa_008",
+      "doc": "Twelve lessons."
+    },
+    "us_006": {
+      "id": "us_006",
+      "kind": "useCase",
+      "name": "Export the argument",
+      "ownerId": "pa_008",
+      "doc": "Memo, email, slides, talk track."
+    },
+    "us_001": {
+      "id": "us_001",
+      "kind": "useCase",
+      "name": "Analyse it as a graph",
+      "ownerId": "pa_008",
+      "doc": "JSON-LD, triples."
+    },
+    "re_001": {
+      "id": "re_001",
+      "kind": "requirement",
+      "name": "Clocks move only for what changed",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY1",
+      "text": "A record whose body is unchanged shall keep its updatedAt; a save that changes nothing writes nothing."
+    },
+    "re_002": {
+      "id": "re_002",
+      "kind": "requirement",
+      "name": "Deletions are tombstones",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY2",
+      "text": "A record that leaves the document shall be written back with deletedAt set, and exports shall carry tombstones."
+    },
+    "re_003": {
+      "id": "re_003",
+      "kind": "requirement",
+      "name": "Never swap under the caret",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY3",
+      "text": "Arriving changes shall wait while the caret is in a field, and the app shall say so."
+    },
+    "re_004": {
+      "id": "re_004",
+      "kind": "requirement",
+      "name": "No external origin",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY4",
+      "text": "The page shall reference no external origin — fonts included — so an installed copy works in airplane mode."
+    },
+    "re_005": {
+      "id": "re_005",
+      "kind": "requirement",
+      "name": "Prefixed storage",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY5",
+      "text": "Everything the app owns shall be named pyramid.*; ui-kit.* stays shared on purpose."
+    },
+    "re_006": {
+      "id": "re_006",
+      "kind": "requirement",
+      "name": "Round-trips keep the analysis",
+      "ownerId": "pa_005",
+      "doc": "",
+      "reqId": "PY6",
+      "text": "Pyramid’s own state shall travel under x-pyramid, so a round-trip does not silently lose it."
+    },
+    "te_001": {
+      "id": "te_001",
+      "kind": "testCase",
+      "name": "check-inline.mjs",
+      "ownerId": "pa_006",
+      "doc": "Fails when the inlined kit copies drift from ../ui-kit and ../sync-kit."
+    },
+    "bl_027": {
+      "id": "bl_027",
+      "kind": "block",
+      "name": "Pyramid Principle",
+      "ownerId": "pa_008",
+      "doc": "",
+      "isAbstract": false
+    }
+  },
+  "relationships": {
+    "rl_001": {
+      "id": "rl_001",
+      "kind": "generalization",
+      "sourceId": "bl_016",
+      "targetId": "bl_018",
+      "name": ""
+    },
+    "rl_002": {
+      "id": "rl_002",
+      "kind": "generalization",
+      "sourceId": "bl_015",
+      "targetId": "bl_018",
+      "name": ""
+    },
+    "rl_003": {
+      "id": "rl_003",
+      "kind": "generalization",
+      "sourceId": "bl_014",
+      "targetId": "bl_018",
+      "name": ""
+    },
+    "rl_004": {
+      "id": "rl_004",
+      "kind": "generalization",
+      "sourceId": "bl_017",
+      "targetId": "bl_018",
+      "name": ""
+    },
+    "rl_005": {
+      "id": "rl_005",
+      "kind": "generalization",
+      "sourceId": "bl_019",
+      "targetId": "bl_018",
+      "name": ""
+    },
+    "rl_006": {
+      "id": "rl_006",
+      "kind": "connector",
+      "sourceId": "pr_007",
+      "targetId": "pr_001",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_007",
+      "targetPortId": "po_002"
+    },
+    "rl_007": {
+      "id": "rl_007",
+      "kind": "connector",
+      "sourceId": "pr_001",
+      "targetId": "pr_004",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_001",
+      "targetPortId": "po_004"
+    },
+    "rl_008": {
+      "id": "rl_008",
+      "kind": "connector",
+      "sourceId": "pr_004",
+      "targetId": "pr_007",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_005",
+      "targetPortId": "po_008"
+    },
+    "rl_009": {
+      "id": "rl_009",
+      "kind": "connector",
+      "sourceId": "pr_001",
+      "targetId": "pr_008",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_001",
+      "targetPortId": "po_010"
+    },
+    "rl_010": {
+      "id": "rl_010",
+      "kind": "connector",
+      "sourceId": "pr_008",
+      "targetId": "pr_005",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_012",
+      "targetPortId": "po_006"
+    },
+    "rl_011": {
+      "id": "rl_011",
+      "kind": "connector",
+      "sourceId": "pr_005",
+      "targetId": "pr_009",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_006",
+      "targetPortId": "po_013"
+    },
+    "rl_012": {
+      "id": "rl_012",
+      "kind": "connector",
+      "sourceId": "pr_008",
+      "targetId": "pr_001",
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_011",
+      "targetPortId": "po_003"
+    },
+    "rl_013": {
+      "id": "rl_013",
+      "kind": "connector",
+      "sourceId": "pr_009",
+      "targetId": null,
+      "name": "",
+      "ownerId": "bl_009",
+      "sourcePortId": "po_014",
+      "targetPortId": "po_009"
+    },
+    "rl_014": {
+      "id": "rl_014",
+      "kind": "dependency",
+      "sourceId": "bl_009",
+      "targetId": "bl_026",
+      "name": "inlined CSS + ported theme.js"
+    },
+    "rl_015": {
+      "id": "rl_015",
+      "kind": "dependency",
+      "sourceId": "bl_009",
+      "targetId": "bl_024",
+      "name": "inlined IIFE"
+    },
+    "rl_016": {
+      "id": "rl_016",
+      "kind": "dependency",
+      "sourceId": "bl_024",
+      "targetId": "bl_023",
+      "name": "/w/pyramid/sync"
+    },
+    "rl_017": {
+      "id": "rl_017",
+      "kind": "dependency",
+      "sourceId": "bl_025",
+      "targetId": "bl_009",
+      "name": "toolkit-app.json"
+    },
+    "rl_018": {
+      "id": "rl_018",
+      "kind": "dependency",
+      "sourceId": "bl_022",
+      "targetId": "bl_009",
+      "name": "hosts"
+    },
+    "rl_019": {
+      "id": "rl_019",
+      "kind": "dependency",
+      "sourceId": "bl_021",
+      "targetId": "bl_009",
+      "name": "pyramid/1 export"
+    },
+    "rl_020": {
+      "id": "rl_020",
+      "kind": "association",
+      "sourceId": "ac_002",
+      "targetId": "us_005",
+      "name": ""
+    },
+    "rl_021": {
+      "id": "rl_021",
+      "kind": "association",
+      "sourceId": "ac_002",
+      "targetId": "us_004",
+      "name": ""
+    },
+    "rl_022": {
+      "id": "rl_022",
+      "kind": "association",
+      "sourceId": "ac_002",
+      "targetId": "us_003",
+      "name": ""
+    },
+    "rl_023": {
+      "id": "rl_023",
+      "kind": "association",
+      "sourceId": "ac_002",
+      "targetId": "us_007",
+      "name": ""
+    },
+    "rl_024": {
+      "id": "rl_024",
+      "kind": "association",
+      "sourceId": "ac_002",
+      "targetId": "us_006",
+      "name": ""
+    },
+    "rl_025": {
+      "id": "rl_025",
+      "kind": "association",
+      "sourceId": "ac_001",
+      "targetId": "us_001",
+      "name": ""
+    },
+    "rl_026": {
+      "id": "rl_026",
+      "kind": "include",
+      "sourceId": "us_003",
+      "targetId": "us_002",
+      "name": ""
+    },
+    "rl_027": {
+      "id": "rl_027",
+      "kind": "satisfy",
+      "sourceId": "bl_010",
+      "targetId": "re_001",
+      "name": ""
+    },
+    "rl_028": {
+      "id": "rl_028",
+      "kind": "satisfy",
+      "sourceId": "bl_010",
+      "targetId": "re_002",
+      "name": ""
+    },
+    "rl_029": {
+      "id": "rl_029",
+      "kind": "satisfy",
+      "sourceId": "bl_011",
+      "targetId": "re_003",
+      "name": ""
+    },
+    "rl_030": {
+      "id": "rl_030",
+      "kind": "satisfy",
+      "sourceId": "bl_009",
+      "targetId": "re_004",
+      "name": ""
+    },
+    "rl_031": {
+      "id": "rl_031",
+      "kind": "satisfy",
+      "sourceId": "bl_006",
+      "targetId": "re_005",
+      "name": ""
+    },
+    "rl_032": {
+      "id": "rl_032",
+      "kind": "satisfy",
+      "sourceId": "bl_002",
+      "targetId": "re_006",
+      "name": ""
+    },
+    "rl_033": {
+      "id": "rl_033",
+      "kind": "verify",
+      "sourceId": "te_001",
+      "targetId": "re_004",
+      "name": ""
+    }
+  },
+  "diagrams": {
+    "dg_001": {
+      "id": "dg_001",
+      "kind": "bdd",
+      "name": "One file",
+      "ownerId": "pa_002",
+      "symbols": [
+        {
+          "id": "sy_001",
+          "elementId": "bl_009",
+          "x": 1000,
+          "y": 300,
+          "w": 280,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_002",
+          "elementId": "bl_007",
+          "x": 480,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_003",
+          "elementId": "bl_005",
+          "x": 670,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_004",
+          "elementId": "bl_008",
+          "x": 860,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_005",
+          "elementId": "bl_004",
+          "x": 1050,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_006",
+          "elementId": "bl_013",
+          "x": 1240,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_007",
+          "elementId": "bl_002",
+          "x": 1430,
+          "y": 40,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_008",
+          "elementId": "bl_001",
+          "x": 480,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_009",
+          "elementId": "bl_010",
+          "x": 670,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_010",
+          "elementId": "bl_006",
+          "x": 860,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_011",
+          "elementId": "bl_011",
+          "x": 1050,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_012",
+          "elementId": "bl_012",
+          "x": 1240,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_013",
+          "elementId": "bl_003",
+          "x": 1430,
+          "y": 560,
+          "w": 170,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_001",
+          "refId": "pr_006"
+        },
+        {
+          "id": "pa_002",
+          "refId": "pr_011"
+        },
+        {
+          "id": "pa_003",
+          "refId": "pr_007"
+        },
+        {
+          "id": "pa_004",
+          "refId": "pr_004"
+        },
+        {
+          "id": "pa_005",
+          "refId": "pr_012"
+        },
+        {
+          "id": "pa_006",
+          "refId": "pr_002"
+        },
+        {
+          "id": "pa_007",
+          "refId": "pr_001"
+        },
+        {
+          "id": "pa_008",
+          "refId": "pr_008"
+        },
+        {
+          "id": "pa_009",
+          "refId": "pr_005"
+        },
+        {
+          "id": "pa_010",
+          "refId": "pr_009"
+        },
+        {
+          "id": "pa_011",
+          "refId": "pr_010"
+        },
+        {
+          "id": "pa_012",
+          "refId": "pr_003"
+        }
+      ]
+    },
+    "dg_002": {
+      "id": "dg_002",
+      "kind": "ibd",
+      "name": "An edit, saved and synced",
+      "ownerId": "bl_009",
+      "contextId": "bl_009",
+      "symbols": [
+        {
+          "id": "sy_014",
+          "elementId": "pr_007",
+          "x": 120,
+          "y": 80,
+          "w": 220,
+          "h": 180,
+          "ports": {
+            "po_007": {
+              "side": "r",
+              "t": 0.3
+            },
+            "po_008": {
+              "side": "l",
+              "t": 0.7
+            }
+          }
+        },
+        {
+          "id": "sy_015",
+          "elementId": "pr_001",
+          "x": 480,
+          "y": 80,
+          "w": 240,
+          "h": 180,
+          "ports": {
+            "po_002": {
+              "side": "l",
+              "t": 0.3
+            },
+            "po_001": {
+              "side": "b",
+              "t": 0.3
+            },
+            "po_003": {
+              "side": "r",
+              "t": 0.75
+            }
+          }
+        },
+        {
+          "id": "sy_016",
+          "elementId": "pr_004",
+          "x": 120,
+          "y": 400,
+          "w": 220,
+          "h": 120,
+          "ports": {
+            "po_004": {
+              "side": "r",
+              "t": 0.3
+            },
+            "po_005": {
+              "side": "l",
+              "t": 0.5
+            }
+          }
+        },
+        {
+          "id": "sy_017",
+          "elementId": "pr_008",
+          "x": 880,
+          "y": 300,
+          "w": 240,
+          "h": 150,
+          "ports": {
+            "po_010": {
+              "side": "l",
+              "t": 0.3
+            },
+            "po_011": {
+              "side": "l",
+              "t": 0.7
+            },
+            "po_012": {
+              "side": "r",
+              "t": 0.5
+            }
+          }
+        },
+        {
+          "id": "sy_018",
+          "elementId": "pr_005",
+          "x": 1240,
+          "y": 80,
+          "w": 220,
+          "h": 110,
+          "ports": {
+            "po_006": {
+              "side": "r",
+              "t": 0.5
+            }
+          }
+        },
+        {
+          "id": "sy_019",
+          "elementId": "pr_009",
+          "x": 1240,
+          "y": 420,
+          "w": 220,
+          "h": 120,
+          "ports": {
+            "po_013": {
+              "side": "r",
+              "t": 0.3
+            },
+            "po_014": {
+              "side": "b",
+              "t": 0.5
+            }
+          }
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_013",
+          "refId": "rl_006"
+        },
+        {
+          "id": "pa_014",
+          "refId": "rl_007"
+        },
+        {
+          "id": "pa_015",
+          "refId": "rl_008"
+        },
+        {
+          "id": "pa_016",
+          "refId": "rl_009"
+        },
+        {
+          "id": "pa_017",
+          "refId": "rl_012"
+        },
+        {
+          "id": "pa_018",
+          "refId": "rl_010"
+        },
+        {
+          "id": "pa_019",
+          "refId": "rl_011"
+        },
+        {
+          "id": "pa_020",
+          "refId": "rl_013"
+        }
+      ],
+      "framePorts": {
+        "po_009": {
+          "side": "b",
+          "t": 0.85
+        }
+      }
+    },
+    "dg_003": {
+      "id": "dg_003",
+      "kind": "bdd",
+      "name": "pyramid/1 records",
+      "ownerId": "pa_004",
+      "symbols": [
+        {
+          "id": "sy_020",
+          "elementId": "bl_018",
+          "x": 520,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_021",
+          "elementId": "bl_016",
+          "x": 40,
+          "y": 320,
+          "w": 200,
+          "h": 0
+        },
+        {
+          "id": "sy_022",
+          "elementId": "bl_015",
+          "x": 280,
+          "y": 320,
+          "w": 260,
+          "h": 0
+        },
+        {
+          "id": "sy_023",
+          "elementId": "bl_014",
+          "x": 580,
+          "y": 320,
+          "w": 180,
+          "h": 0
+        },
+        {
+          "id": "sy_024",
+          "elementId": "bl_017",
+          "x": 800,
+          "y": 320,
+          "w": 180,
+          "h": 0
+        },
+        {
+          "id": "sy_025",
+          "elementId": "bl_019",
+          "x": 1020,
+          "y": 320,
+          "w": 180,
+          "h": 0
+        },
+        {
+          "id": "sy_026",
+          "elementId": "bl_020",
+          "x": 1240,
+          "y": 40,
+          "w": 260,
+          "h": 0
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_021",
+          "refId": "rl_001"
+        },
+        {
+          "id": "pa_022",
+          "refId": "rl_002"
+        },
+        {
+          "id": "pa_023",
+          "refId": "rl_003"
+        },
+        {
+          "id": "pa_024",
+          "refId": "rl_004"
+        },
+        {
+          "id": "pa_025",
+          "refId": "rl_005"
+        }
+      ]
+    },
+    "dg_004": {
+      "id": "dg_004",
+      "kind": "bdd",
+      "name": "In the toolkit",
+      "ownerId": "pa_007",
+      "symbols": [
+        {
+          "id": "sy_027",
+          "elementId": "bl_022",
+          "x": 40,
+          "y": 40,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_028",
+          "elementId": "bl_025",
+          "x": 360,
+          "y": 40,
+          "w": 220,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_029",
+          "elementId": "bl_021",
+          "x": 700,
+          "y": 40,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_030",
+          "elementId": "bl_009",
+          "x": 340,
+          "y": 300,
+          "w": 260,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_031",
+          "elementId": "bl_026",
+          "x": 100,
+          "y": 560,
+          "w": 180,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_032",
+          "elementId": "bl_024",
+          "x": 520,
+          "y": 560,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_033",
+          "elementId": "bl_023",
+          "x": 500,
+          "y": 800,
+          "w": 240,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_026",
+          "refId": "rl_017"
+        },
+        {
+          "id": "pa_027",
+          "refId": "rl_018"
+        },
+        {
+          "id": "pa_028",
+          "refId": "rl_019"
+        },
+        {
+          "id": "pa_029",
+          "refId": "rl_014"
+        },
+        {
+          "id": "pa_030",
+          "refId": "rl_015"
+        },
+        {
+          "id": "pa_031",
+          "refId": "rl_016"
+        }
+      ]
+    },
+    "dg_005": {
+      "id": "dg_005",
+      "kind": "uc",
+      "name": "What a writer does",
+      "ownerId": "pa_008",
+      "symbols": [
+        {
+          "id": "sy_034",
+          "elementId": "bl_027",
+          "x": 300,
+          "y": 40,
+          "w": 620,
+          "h": 720
+        },
+        {
+          "id": "sy_035",
+          "elementId": "ac_002",
+          "x": 60,
+          "y": 360,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "id": "sy_036",
+          "elementId": "ac_001",
+          "x": 1040,
+          "y": 640,
+          "w": 0,
+          "h": 0
+        },
+        {
+          "id": "sy_037",
+          "elementId": "us_005",
+          "x": 380,
+          "y": 80,
+          "w": 210,
+          "h": 0
+        },
+        {
+          "id": "sy_038",
+          "elementId": "us_004",
+          "x": 380,
+          "y": 190,
+          "w": 190,
+          "h": 0
+        },
+        {
+          "id": "sy_039",
+          "elementId": "us_003",
+          "x": 380,
+          "y": 300,
+          "w": 210,
+          "h": 0
+        },
+        {
+          "id": "sy_040",
+          "elementId": "us_002",
+          "x": 660,
+          "y": 300,
+          "w": 200,
+          "h": 0
+        },
+        {
+          "id": "sy_041",
+          "elementId": "us_007",
+          "x": 380,
+          "y": 410,
+          "w": 200,
+          "h": 0
+        },
+        {
+          "id": "sy_042",
+          "elementId": "us_006",
+          "x": 380,
+          "y": 520,
+          "w": 220,
+          "h": 0
+        },
+        {
+          "id": "sy_043",
+          "elementId": "us_001",
+          "x": 640,
+          "y": 640,
+          "w": 230,
+          "h": 0
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_032",
+          "refId": "rl_020"
+        },
+        {
+          "id": "pa_033",
+          "refId": "rl_021"
+        },
+        {
+          "id": "pa_034",
+          "refId": "rl_022"
+        },
+        {
+          "id": "pa_035",
+          "refId": "rl_026"
+        },
+        {
+          "id": "pa_036",
+          "refId": "rl_023"
+        },
+        {
+          "id": "pa_037",
+          "refId": "rl_024"
+        },
+        {
+          "id": "pa_038",
+          "refId": "rl_025"
+        }
+      ]
+    },
+    "dg_006": {
+      "id": "dg_006",
+      "kind": "req",
+      "name": "Rules",
+      "ownerId": "pa_005",
+      "symbols": [
+        {
+          "id": "sy_044",
+          "elementId": "re_001",
+          "x": 40,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_045",
+          "elementId": "re_002",
+          "x": 370,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_046",
+          "elementId": "re_003",
+          "x": 700,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_047",
+          "elementId": "re_004",
+          "x": 1030,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_048",
+          "elementId": "re_005",
+          "x": 1360,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_049",
+          "elementId": "re_006",
+          "x": 1690,
+          "y": 40,
+          "w": 300,
+          "h": 0
+        },
+        {
+          "id": "sy_050",
+          "elementId": "bl_010",
+          "x": 210,
+          "y": 330,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_051",
+          "elementId": "bl_011",
+          "x": 700,
+          "y": 330,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_052",
+          "elementId": "te_001",
+          "x": 970,
+          "y": 330,
+          "w": 200,
+          "h": 0
+        },
+        {
+          "id": "sy_053",
+          "elementId": "bl_009",
+          "x": 1200,
+          "y": 330,
+          "w": 220,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_054",
+          "elementId": "bl_006",
+          "x": 1490,
+          "y": 330,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        },
+        {
+          "id": "sy_055",
+          "elementId": "bl_002",
+          "x": 1820,
+          "y": 330,
+          "w": 200,
+          "h": 0,
+          "hide": {
+            "values": true,
+            "parts": true,
+            "ports": true,
+            "operations": true,
+            "references": true
+          }
+        }
+      ],
+      "paths": [
+        {
+          "id": "pa_039",
+          "refId": "rl_027"
+        },
+        {
+          "id": "pa_040",
+          "refId": "rl_028"
+        },
+        {
+          "id": "pa_041",
+          "refId": "rl_029"
+        },
+        {
+          "id": "pa_042",
+          "refId": "rl_033"
+        },
+        {
+          "id": "pa_043",
+          "refId": "rl_030"
+        },
+        {
+          "id": "pa_044",
+          "refId": "rl_031"
+        },
+        {
+          "id": "pa_045",
+          "refId": "rl_032"
+        }
+      ]
+    },
+    "dg_007": {
+      "id": "dg_007",
+      "kind": "reqtable",
+      "name": "Rules, as a table",
+      "ownerId": "pa_005"
+    }
+  }
+}
